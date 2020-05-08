@@ -28,7 +28,7 @@ const NavLg = () => {
           </li>
           <li>
             <NavLink to='/profiles' activeClassName='current' exact>
-              <i className='fas fa-user-tie'></i> &nbsp;Profiles
+              <i className='fas fa-user-tie'></i> &nbsp;Parent
             </NavLink>
           </li>
           <li>

@@ -65,7 +65,6 @@ const ProfileStudent = ({
                     <th>Home Address</th>
                     <th>Emergency Phone No</th>
                     <th>Date of Registration</th>
-                    <th>Operation</th>
                   </tr>
                 </thead>
                 <tbody>{getAllStudent}</tbody>
