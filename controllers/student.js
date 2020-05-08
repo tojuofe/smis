@@ -141,12 +141,12 @@ exports.postStudent = async (req, res, next) => {
         if (pgi_work_address)
           studentFields.parent_guardian_info.pgi_work_address = pgi_work_address;
 
-        let staff = new Staff(staffFields);
+        let student = new Student(staffFields);
         cloudinary.v2.uploader.upload(file.path).then((result) => {
-          staff.img = result.secure_url;
+          student.img = result.secure_url;
           // Create
-          Staff.create(staff);
-          res.status(200).json({ success: true, data: staff });
+          Staff.create(student);
+          res.status(200).json({ success: true, data: student });
         });
       } catch (err) {
         if (err.name === 'ValidationError') {
