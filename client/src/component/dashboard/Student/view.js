@@ -34,7 +34,7 @@ const View = ({ current }) => {
           </button>
           <div className='lgmodal-header'>
             <div className='img-cover'>
-              <img src={'/' + img} alt='' className='profile-img' />
+              <img src={img} alt='' className='profile-img' />
             </div>
             <h3>STUDENT PROFILE</h3>
           </div>

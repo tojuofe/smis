@@ -1,6 +1,7 @@
 const Staff = require('../models/staff');
-const upload = require('../setProfilePic/SetPicture');
-const fs = require('fs');
+const upload = require('../services/SetPicture');
+const cloudinary = require('cloudinary');
+require('../services/cloudinary');
 
 // @desc       GET All STAFF
 // @route      GET api/staff
@@ -47,6 +48,7 @@ exports.getStaff = async (req, res, next) => {
 exports.postStaff = async (req, res, next) => {
   upload(req, res, (err) => {
     const file = req.file;
+
     if (err === 'ERROR: IMAGE ONLY') {
       res.status(400).json({ msg: 'ERROR: IMAGE ONLY' });
     } else if (err) {
@@ -124,11 +126,12 @@ exports.postStaff = async (req, res, next) => {
           staffFields.next_of_kin.nok_relationship = nok_relationship;
 
         let staff = new Staff(staffFields);
-        staff.img = file.path.slice(14, 45);
-
-        // Create
-        Staff.create(staff);
-        res.status(200).json({ success: true, data: staff });
+        cloudinary.v2.uploader.upload(file.path).then((result) => {
+          staff.img = result.secure_url;
+          // Create
+          Staff.create(staff);
+          res.status(200).json({ success: true, data: staff });
+        });
       } catch (err) {
         if (err.name === 'ValidationError') {
           const msgs = Object.values(err.errors).map((val) => val.message);

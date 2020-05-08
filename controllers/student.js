@@ -1,6 +1,8 @@
 const Student = require('../models/student');
 const rStudent = require('../models/rStudent');
-const upload = require('../setProfilePic/SetPicture');
+const upload = require('../services/SetPicture');
+const cloudinary = require('cloudinary');
+require('../services/cloudinary');
 
 // @desc       GET All STUDENT
 // @route      GET api/student
@@ -139,11 +141,13 @@ exports.postStudent = async (req, res, next) => {
         if (pgi_work_address)
           studentFields.parent_guardian_info.pgi_work_address = pgi_work_address;
 
-        let student = new Student(studentFields);
-        student.img = file.path.slice(14, 45);
-        // Create
-        Student.create(student);
-        res.status(200).json({ success: true, data: student });
+        let staff = new Staff(staffFields);
+        cloudinary.v2.uploader.upload(file.path).then((result) => {
+          staff.img = result.secure_url;
+          // Create
+          Staff.create(staff);
+          res.status(200).json({ success: true, data: staff });
+        });
       } catch (err) {
         if (err.name === 'ValidationError') {
           const msgs = Object.values(err.errors).map((val) => val.message);
