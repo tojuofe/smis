@@ -1,5 +1,6 @@
 const Staff = require('../models/staff');
 const upload = require('../setProfilePic/SetPicture');
+const fs = require('fs');
 
 // @desc       GET All STAFF
 // @route      GET api/staff
@@ -124,6 +125,7 @@ exports.postStaff = async (req, res, next) => {
 
         let staff = new Staff(staffFields);
         staff.img = file.path.slice(14, 45);
+
         // Create
         Staff.create(staff);
         res.status(200).json({ success: true, data: staff });

@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-// // Service Worker
+// Service Worker
 app.get('/service-worker.js', (req, res) => {
   res.sendFile(path.solve(__dirname, 'client', 'build', 'service-worker.js'));
 });
