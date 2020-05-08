@@ -13,10 +13,10 @@ import Alert from '../../layout/Alert';
 import Spinner from '../../layout/Spinner';
 import ClassItem from './classItem';
 import ClassAssign from './classAssign';
+import CreateClass from './createClass';
 
 const Class = ({
   staff: { staffs, loading, filtered },
-  class_: { classes, loadings },
   getStaff,
   getClasses,
   createClass,
@@ -50,12 +50,6 @@ const Class = ({
       ? filtered.map((staff) => <ClassItem key={staff._id} staff={staff} />)
       : staffs.map((staff) => <ClassItem key={staff._id} staff={staff} />);
 
-  const getClass = classes.map((c) => (
-    <tr key={c._id}>
-      <td>{c.class_admitted}</td>
-    </tr>
-  ));
-
   return (
     <Fragment>
       <NavSm />
@@ -71,6 +65,9 @@ const Class = ({
                 </button>
                 <button className='btnclick' data-id='retstu'>
                   ASSIGN CLASS
+                </button>
+                <button className='btnclick' data-id='createclass'>
+                  CREATE CLASS
                 </button>
               </div>
 
@@ -95,18 +92,6 @@ const Class = ({
                         className='btn mt-1'
                       />
                     </form>
-                    {classes !== null && !loadings ? (
-                      <table className='table-class'>
-                        <thead>
-                          <tr>
-                            <th>Class Created</th>
-                          </tr>
-                        </thead>
-                        <tbody>{getClass}</tbody>
-                      </table>
-                    ) : (
-                      <Spinner />
-                    )}
                   </div>
                 </div>
               </div>
@@ -155,6 +140,7 @@ const Class = ({
               </div>
             </div>
             <ClassAssign />
+            <CreateClass />
           </div>
         </div>
       </div>
@@ -164,7 +150,6 @@ const Class = ({
 
 Class.propTypes = {
   staff: PropTypes.object.isRequired,
-  class_: PropTypes.object.isRequired,
   getClasses: PropTypes.func.isRequired,
   createClass: PropTypes.func.isRequired,
   getStaff: PropTypes.func.isRequired,
@@ -173,7 +158,6 @@ Class.propTypes = {
 
 const mapStateToProps = (state) => ({
   staff: state.staff,
-  class_: state.class_,
 });
 
 export default connect(mapStateToProps, {
