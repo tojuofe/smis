@@ -40,6 +40,7 @@ const Login = ({ login, isAuthenticated }) => {
                 value={email}
                 name='email'
                 onChange={onChange}
+                required
               />
             </div>
             <div className='form-group'>
@@ -50,6 +51,7 @@ const Login = ({ login, isAuthenticated }) => {
                 value={password}
                 name='password'
                 onChange={onChange}
+                required
               />
             </div>
             <input type='submit' value='Login' className='btn btn-block mt-1' />
