@@ -29,7 +29,7 @@ export const getStudents = () => async (dispatch) => {
 };
 
 export const createStudent = ({
-  file,
+  image,
   surName,
   middleName,
   lastName,
@@ -59,39 +59,39 @@ export const createStudent = ({
     },
   };
 
-  let formData = new FormData();
-  formData.append('image', file);
-  formData.append('surName', surName);
-  formData.append('middleName', middleName);
-  formData.append('lastName', lastName);
-  formData.append('gender', gender);
-  formData.append('date_of_birth', date_of_birth);
-  formData.append('house_address', house_address);
-  formData.append('place_of_birth', place_of_birth);
-  formData.append('religion', religion);
-  formData.append('nationality', nationality);
-  formData.append('state_of_origin', state_of_origin);
-  formData.append('emergency_contact', emergency_contact);
-  formData.append('class_admitted', class_admitted);
-  formData.append('date_of_registration', date_of_registration);
-  formData.append('pgi_surName', pgi_surName);
-  formData.append('pgi_middleName', pgi_middleName);
-  formData.append('pgi_lastName', pgi_lastName);
-  formData.append('pgi_occupation', pgi_occupation);
-  formData.append('pgi_email', pgi_email);
-  formData.append('pgi_phoneNumber1', pgi_phoneNumber1);
-  formData.append('pgi_phoneNumber2', pgi_phoneNumber2);
-  formData.append('pgi_house_address', pgi_house_address);
-  formData.append('pgi_work_address', pgi_work_address);
-
   try {
+    let formData = new FormData();
+    formData.append('image', image);
+    formData.append('surName', surName);
+    formData.append('middleName', middleName);
+    formData.append('lastName', lastName);
+    formData.append('gender', gender);
+    formData.append('date_of_birth', date_of_birth);
+    formData.append('house_address', house_address);
+    formData.append('place_of_birth', place_of_birth);
+    formData.append('religion', religion);
+    formData.append('nationality', nationality);
+    formData.append('state_of_origin', state_of_origin);
+    formData.append('emergency_contact', emergency_contact);
+    formData.append('class_admitted', class_admitted);
+    formData.append('date_of_registration', date_of_registration);
+    formData.append('pgi_surName', pgi_surName);
+    formData.append('pgi_middleName', pgi_middleName);
+    formData.append('pgi_lastName', pgi_lastName);
+    formData.append('pgi_occupation', pgi_occupation);
+    formData.append('pgi_email', pgi_email);
+    formData.append('pgi_phoneNumber1', pgi_phoneNumber1);
+    formData.append('pgi_phoneNumber2', pgi_phoneNumber2);
+    formData.append('pgi_house_address', pgi_house_address);
+    formData.append('pgi_work_address', pgi_work_address);
+
     const res = await axios.post('/api/student', formData, config);
 
     dispatch({
       type: CREATE_STUDENT,
       payload: res.data.data,
     });
-
+    console.log(res.data.data);
     dispatch(setAlert('Student Created Successfully', 'success'));
   } catch (err) {
     const errors = err.response.data.msg;

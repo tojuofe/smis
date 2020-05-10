@@ -45,7 +45,7 @@ exports.getStaff = async (req, res, next) => {
 // @desc       CREATE STAFF
 // @route      POST api/staff
 // @access     Private
-exports.postStaff = async (req, res, next) => {
+exports.postStaff = async (req, res, next) =>
   upload(req, res, (err) => {
     const file = req.file;
 
@@ -148,7 +148,6 @@ exports.postStaff = async (req, res, next) => {
       }
     }
   });
-};
 
 // @desc       UPDATE STAFF
 // @route      PUT api/staff/:id

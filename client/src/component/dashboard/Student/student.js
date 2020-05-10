@@ -15,7 +15,7 @@ import View from './view';
 import StudentEdit from './studentEdit';
 
 const Student = ({ classes, createStudent, getClasses }) => {
-  const [file, setFile] = useState('');
+  const [image, setFile] = useState('');
   const [surName, setSurName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,7 +49,7 @@ const Student = ({ classes, createStudent, getClasses }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     createStudent({
-      file,
+      image,
       surName,
       middleName,
       lastName,
@@ -73,8 +73,6 @@ const Student = ({ classes, createStudent, getClasses }) => {
       pgi_house_address,
       pgi_work_address,
     });
-
-    alertScroll();
 
     inputRef.current.value = '';
     setFile(null);
@@ -100,6 +98,8 @@ const Student = ({ classes, createStudent, getClasses }) => {
     setpgiPhoneNumber2('');
     setpgiHouseAddress('');
     setpgiWorkAddress('');
+
+    alertScroll();
   };
 
   return (

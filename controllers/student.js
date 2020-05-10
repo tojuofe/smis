@@ -69,7 +69,7 @@ exports.getStudent = async (req, res, next) => {
 // @desc       CREATE STUDENT
 // @route      POST api/student
 // @access     Private
-exports.postStudent = async (req, res, next) => {
+exports.postStudent = async (req, res, next) =>
   upload(req, res, (err) => {
     const file = req.file;
     if (err === 'ERROR: IMAGE ONLY') {
@@ -141,11 +141,11 @@ exports.postStudent = async (req, res, next) => {
         if (pgi_work_address)
           studentFields.parent_guardian_info.pgi_work_address = pgi_work_address;
 
-        let student = new Student(staffFields);
+        let student = new Student(studentFields);
         cloudinary.v2.uploader.upload(file.path).then((result) => {
           student.img = result.secure_url;
           // Create
-          Staff.create(student);
+          Student.create(student);
           res.status(200).json({ success: true, data: student });
         });
       } catch (err) {
@@ -163,7 +163,6 @@ exports.postStudent = async (req, res, next) => {
       }
     }
   });
-};
 
 // @desc       CREATE RETURNING STUDENT
 // @route      POST api/student/rStudent
