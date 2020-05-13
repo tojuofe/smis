@@ -2,26 +2,26 @@ import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../action/auth';
+import { loginStaff } from '../../action/auth';
 import Alert from '../layout/Alert';
 
-const Login = ({ login, isAuthenticated }) => {
+const StaffLogin = ({ loginStaff, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    phoneNumber1: '',
   });
-  const { email, password } = formData;
+  const { email, phoneNumber1 } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login({ email, password });
+    loginStaff({ email, phoneNumber1 });
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/' />;
+    return <Redirect to='/profile' />;
   }
 
   return (
@@ -29,7 +29,7 @@ const Login = ({ login, isAuthenticated }) => {
       <div className='container'>
         <Alert />
         <div className='login-form'>
-          <h1>Login</h1>
+          <h1>Staff Login</h1>
           <p>Enter Correct Details</p>
           <form onSubmit={onSubmit}>
             <div className='form-group'>
@@ -48,8 +48,8 @@ const Login = ({ login, isAuthenticated }) => {
               <input
                 type='password'
                 placeholder='Password'
-                value={password}
-                name='password'
+                value={phoneNumber1}
+                name='phoneNumber1'
                 onChange={onChange}
                 required
               />
@@ -62,8 +62,8 @@ const Login = ({ login, isAuthenticated }) => {
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+StaffLogin.propTypes = {
+  loginStaff: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -71,4 +71,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { loginStaff })(StaffLogin);

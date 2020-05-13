@@ -1,3 +1,4 @@
+/* ADMIN */
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const SET_ALERT = 'SET_ALERT';
@@ -33,3 +34,7 @@ export const PAYMENT_ERROR = 'PAYMENT_ERROR';
 export const CREATE_REPORT = 'CREATE_REPORT';
 export const REPORT_ERROR = 'REPORT_ERROR';
 export const LOGOUT = 'LOGOUT';
+
+// STAFF
+export const STAFF_LOADED = 'STAFF_LOADED';
+export const STAFF_SUCCESS = 'STAFF_SUCCESS';

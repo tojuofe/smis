@@ -12,9 +12,15 @@ import Class from './dashboard/Class/class';
 import Payment from './dashboard/Payment/payment';
 import Report from './dashboard/Report/report';
 import NotFound from './dashboard/notfound.js';
-// import Navbar from './dashboard/Navbar';
+
+// Staff Component
+import StaffLogin from './auth/Staff.login';
+import Profile from './staff/Profile';
+import View from './staff/View';
+import Reports from './staff/Report';
 
 import PrivateRoute from './routing/PrivateRoute';
+import PrivateRouteStaff from './routing/PrivateRouteStaff';
 
 const Index = () => {
   return (
@@ -29,6 +35,10 @@ const Index = () => {
           <PrivateRoute exact path='/payment' component={Payment} />
           <PrivateRoute exact path='/report' component={Report} />
           <Route exact path='/login' component={Login} />
+          <PrivateRouteStaff exact path='/profile' component={Profile} />
+          <PrivateRouteStaff exact path='/views' component={View} />
+          <PrivateRouteStaff exact path='/reports' component={Reports} />
+          <Route exact path='/staff/login' component={StaffLogin} />
           <Route component={NotFound} />
         </Switch>
       </div>

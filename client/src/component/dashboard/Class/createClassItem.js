@@ -14,26 +14,6 @@ const CreateClassItem = ({ student, getCurrentStudent }) => {
     getCurrentStudent(student);
   };
 
-  const lgModalOpen = () => {
-    const open = document.getElementById('open');
-    const lgmodal = document.getElementById('modal-lg');
-
-    if (open) {
-      lgmodal.classList.add('show-modal');
-    }
-    getCurrentStudent(student);
-  };
-
-  const EditModalOpen = () => {
-    const open = document.getElementById('open');
-    const modal = document.getElementById('editModal');
-
-    if (open) {
-      modal.classList.add('show-modal');
-    }
-    getCurrentStudent(student);
-  };
-
   return (
     <Fragment>
       <tr>
@@ -43,18 +23,7 @@ const CreateClassItem = ({ student, getCurrentStudent }) => {
         <td data-label='Gender'>{student.gender}</td>
         <td data-label='Date of Birth'>{student.date_of_birth}</td>
         <td data-label='Class'>{student.class_admitted}</td>
-        <td data-label='Operations' className='operation'>
-          <button type='submit' className='btn' id='open' onClick={lgModalOpen}>
-            View
-          </button>
-          <button
-            type='submit'
-            className='btn'
-            id='open'
-            onClick={EditModalOpen}
-          >
-            Edit
-          </button>
+        <td data-label='Operations'>
           <button type='submit' className='btn' id='open' onClick={modalOpen}>
             Promote
           </button>

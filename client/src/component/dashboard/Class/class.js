@@ -67,7 +67,7 @@ const Class = ({
                   ASSIGN CLASS
                 </button>
                 <button className='btnclick' data-id='createclass'>
-                  CREATE CLASS
+                  VIEW CLASS
                 </button>
               </div>
 

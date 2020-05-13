@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Staff = require('../models/staff');
 
 // @desc      GET CURRENT LOGGED IN USER
 // @route     GET api/auth
@@ -37,6 +38,69 @@ exports.postAuth = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+    }
+
+    const payload = { user: { id: user.id } };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        return res.status(201).json({
+          success: true,
+          data: token,
+        });
+      }
+    );
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      const msgs = Object.values(err.errors).map((val) => val.message);
+      return res.status(400).json({
+        success: false,
+        error: msgs,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error',
+      });
+    }
+  }
+};
+
+// @desc      GET CURRENT LOGGED IN USER(STAFF)
+// @route     GET api/auth/staff
+// @access    Private
+exports.getAuthStaff = async (req, res, next) => {
+  try {
+    const user = await Staff.findById(req.user.id);
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
+};
+
+// @desc       AUTHENICATE USER AND GET TOKEN
+// @route      POST api/auth
+// @access     Public
+exports.postAuthStaff = async (req, res, next) => {
+  try {
+    const { email, phoneNumber1 } = req.body;
+
+    let user = await Staff.findOne({ email, phoneNumber1 });
+    // let phone = await Staff.findOne({ });
+
+    if (!user) {
       return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
     }
 

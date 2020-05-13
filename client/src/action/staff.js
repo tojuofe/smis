@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import { setAlert } from './alert';
 
+// GET STAFF
 export const getStaff = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/staff');
@@ -25,6 +26,7 @@ export const getStaff = () => async (dispatch) => {
   }
 };
 
+// CREATE STAFF
 export const createStaff = ({
   file,
   surName,
@@ -118,6 +120,7 @@ export const createStaff = ({
   }
 };
 
+// UPDATE STAFF
 export const updateStaff = (staff) => async (dispatch) => {
   const config = {
     headers: {
@@ -142,6 +145,7 @@ export const updateStaff = (staff) => async (dispatch) => {
   }
 };
 
+// ASSIGN CLASS TO STAFF
 export const assignStaffToClass = (staff) => async (dispatch) => {
   const config = {
     headers: {
@@ -166,14 +170,17 @@ export const assignStaffToClass = (staff) => async (dispatch) => {
   }
 };
 
+// GET CURRENT STAFF
 export const getCurrentStaff = (staff) => async (dispatch) => {
   dispatch({ type: SET_CURRENT, payload: staff });
 };
 
+// FILTER STAFF
 export const filterStaff = (text) => (dispatch) => {
   dispatch({ type: FILTER_STAFF, payload: text });
 };
 
+// GET STAFF NAME
 export const getStaffName = (text) => (dispatch) => {
   dispatch({ type: GET_STAFFNAME, payload: text });
 };

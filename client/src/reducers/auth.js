@@ -1,7 +1,9 @@
 import {
   USER_LOADED,
+  STAFF_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
+  STAFF_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
 } from '../action/types';
@@ -23,7 +25,22 @@ export default function (state = initialState, action) {
         loading: false,
         user: payload,
       };
+    case STAFF_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: payload,
+      };
     case LOGIN_SUCCESS:
+      localStorage.setItem('token', payload);
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
+        loading: false,
+      };
+    case STAFF_SUCCESS:
       localStorage.setItem('token', payload);
       return {
         ...state,
