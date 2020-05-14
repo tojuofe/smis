@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const app = express();
-// const enforce = require('express-sslify');
+const enforce = require('express-sslify');
 
 dotenv.config({ path: './config/config.env' });
 
@@ -18,7 +18,7 @@ const report = require('./routes/report');
 
 // Parse Middleware
 app.use(express.json());
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // Register Routes
 app.use('/api/auth', auth);
@@ -36,16 +36,16 @@ app.listen(PORT, () =>
 );
 
 // Serve static assets in production
-// if (process.env.NODE_ENV === 'production') {
-//   // Set Static folder
-//   app.use(express.static('client/build'));
+if (process.env.NODE_ENV === 'production') {
+  // Set Static folder
+  app.use(express.static('client/build'));
 
-//   app.get('*', (req, res) =>
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-//   );
-// }
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+}
 
 // Service Worker
-// app.get('/service-worker.js', (req, res) => {
-//   res.sendFile(path.solve(__dirname, 'client', 'build', 'service-worker.js'));
-// });
+app.get('/service-worker.js', (req, res) => {
+  res.sendFile(path.solve(__dirname, 'client', 'build', 'service-worker.js'));
+});
