@@ -2,6 +2,7 @@ import {
   CREATE_STUDENT,
   GET_STUDENTS,
   SET_CURRENT,
+  CLEAR_CURRENT,
   UPDATE_STUDENT,
   FILTER_STUDENT,
   FILTER_CLASS,
@@ -192,6 +193,11 @@ export const editStudent = (student) => async (dispatch) => {
 
 export const getCurrentStudent = (student) => async (dispatch) => {
   dispatch({ type: SET_CURRENT, payload: student });
+};
+
+// CLEAR CURRENT STUDENT
+export const clearCurrentStudent = () => async (dispatch) => {
+  dispatch({ type: CLEAR_CURRENT });
 };
 
 export const filterStudent = (text) => (dispatch) => {

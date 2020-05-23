@@ -124,6 +124,7 @@ const StaffView = ({ current, dispatch }) => {
 
 StaffView.propTypes = {
   current: PropTypes.object,
+  clearCurrentStaff: PropTypes.func,
 };
 
 const mapStateToProps = ({ staff: { current } }) => ({

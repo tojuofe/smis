@@ -2,6 +2,7 @@ import {
   CREATE_STUDENT,
   GET_STUDENTS,
   SET_CURRENT,
+  CLEAR_CURRENT,
   PROMOTE_STUDENT,
   UPDATE_STUDENT,
   FILTER_STUDENT,
@@ -54,6 +55,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: payload,
+        loading: false,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
         loading: false,
       };
     case FILTER_STUDENT:

@@ -2,9 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { clearCurrentStudent } from '../../../action/student';
 import { lgModalClose } from '../../js/main';
 
-const View = ({ current }) => {
+const View = ({ current, dispatch }) => {
   const [img, setImg] = useState('');
   const [surName, setSurName] = useState('');
   const [gender, setGender] = useState('');
@@ -29,7 +30,14 @@ const View = ({ current }) => {
     <Fragment>
       <div className='modal-container' id='modal-lg'>
         <div className='lgmodal'>
-          <button className='close-btn' id='close' onClick={lgModalClose}>
+          <button
+            className='close-btn'
+            id='close'
+            onClick={() => {
+              lgModalClose();
+              dispatch(clearCurrentStudent());
+            }}
+          >
             <i className='fa fa-times'></i>
           </button>
           <div className='lgmodal-header'>
@@ -83,8 +91,8 @@ View.propTypes = {
   current: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({
-  current: state.student.current,
+const mapStateToProps = ({ student: { current } }) => ({
+  current,
 });
 
-export default connect(mapStateToProps, {})(View);
+export default connect(mapStateToProps)(View);
