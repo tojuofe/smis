@@ -3,6 +3,7 @@ import {
   GET_PAYMENT,
   SET_CURRENT,
   FILTER_PAYMENT,
+  UPDATE_PAYMENT,
   PAYMENT_ERROR,
 } from './types';
 import axios from 'axios';
@@ -69,4 +70,33 @@ export const downloadReceipt = (formData) => () => {
       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
       saveAs(pdfBlob, 'receipt.pdf');
     });
+};
+
+export const updatePayment = (payment) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put(`/api/payment/${payment.id}`, payment, config);
+
+    dispatch({
+      type: UPDATE_PAYMENT,
+      payload: res.data.data,
+    });
+
+    dispatch(setAlert('Payment Updated Successfully', 'success'));
+  } catch (err) {
+    const errors = err.response.data.error;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PAYMENT_ERROR,
+      payload: errors,
+    });
+  }
 };

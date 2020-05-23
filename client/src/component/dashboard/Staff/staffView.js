@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { lgModalClose } from '../../js/main';
+import { clearCurrentStaff } from '../../../action/staff';
 
-const StaffView = ({ current }) => {
+const StaffView = ({ current, dispatch }) => {
   const [img, setImg] = useState('');
   const [surName, setSurName] = useState('');
   const [gender, setGender] = useState('');
@@ -41,7 +42,14 @@ const StaffView = ({ current }) => {
     <Fragment>
       <div className='modal-container' id='modal-lg'>
         <div className='lgmodal'>
-          <button className='close-btn' id='close' onClick={lgModalClose}>
+          <button
+            className='close-btn'
+            id='close'
+            onClick={() => {
+              lgModalClose();
+              dispatch(clearCurrentStaff());
+            }}
+          >
             <i className='fa fa-times'></i>
           </button>
           <div className='lgmodal-header'>
@@ -118,8 +126,8 @@ StaffView.propTypes = {
   current: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({
-  current: state.staff.current,
+const mapStateToProps = ({ staff: { current } }) => ({
+  current,
 });
 
-export default connect(mapStateToProps, {})(StaffView);
+export default connect(mapStateToProps)(StaffView);

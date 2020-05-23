@@ -4,6 +4,7 @@ import {
   GET_STAFFNAME,
   UPDATE_STAFF,
   SET_CURRENT,
+  CLEAR_CURRENT,
   FILTER_STAFF,
   STAFF_ERROR,
 } from './types';
@@ -173,6 +174,11 @@ export const assignStaffToClass = (staff) => async (dispatch) => {
 // GET CURRENT STAFF
 export const getCurrentStaff = (staff) => async (dispatch) => {
   dispatch({ type: SET_CURRENT, payload: staff });
+};
+
+// CLEAR CURRENT STAFF
+export const clearCurrentStaff = () => async (dispatch) => {
+  dispatch({ type: CLEAR_CURRENT });
 };
 
 // FILTER STAFF

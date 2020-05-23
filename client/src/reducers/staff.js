@@ -4,6 +4,7 @@ import {
   GET_STAFFNAME,
   UPDATE_STAFF,
   SET_CURRENT,
+  CLEAR_CURRENT,
   FILTER_STAFF,
   STAFF_ERROR,
 } from '../action/types';
@@ -44,6 +45,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: payload,
+        loading: false,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
         loading: false,
       };
     case FILTER_STAFF:

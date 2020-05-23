@@ -23,7 +23,15 @@ exports.postClass = async (req, res, next) => {
   try {
     const { class_admitted } = req.body;
 
-    let class_admit = new Class({ class_admitted });
+    let class_admit = await Class.findOne({ class_admitted });
+
+    if (class_admit) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'Class already exists' }] });
+    }
+
+    class_admit = new Class({ class_admitted });
 
     class_admit = await Class.create(class_admit);
 

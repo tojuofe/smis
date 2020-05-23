@@ -2,8 +2,9 @@ import {
   CREATE_PAYMENT,
   GET_PAYMENT,
   SET_CURRENT,
-  PAYMENT_ERROR,
   FILTER_PAYMENT,
+  UPDATE_PAYMENT,
+  PAYMENT_ERROR,
 } from '../action/types';
 
 const initialState = {
@@ -27,6 +28,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         payments: [...state.payments, payload],
+        loading: false,
+      };
+    case UPDATE_PAYMENT:
+      return {
+        ...state,
+        payments: state.payments.map((payment) =>
+          payment._id === payload._id ? payload : payment
+        ),
         loading: false,
       };
     case FILTER_PAYMENT:

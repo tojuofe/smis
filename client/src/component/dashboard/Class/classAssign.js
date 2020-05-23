@@ -88,7 +88,7 @@ const ClassAssign = ({
                 </select>
               </div>
               <div>
-                <label htmlFor='class_admitted'>Class Promoted To</label>
+                <label htmlFor='class_admitted'>Assign Class</label>
                 <select
                   className='form-input'
                   name='class_assigned'

@@ -34,10 +34,10 @@ export const createClass = (formData) => async (dispatch) => {
 
     dispatch(setAlert('Class Created Successfully', 'success'));
   } catch (err) {
-    const errors = err.response.data.error;
+    const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
     dispatch({
       type: CLASS_ERROR,

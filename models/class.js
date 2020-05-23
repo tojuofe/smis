@@ -4,6 +4,7 @@ const ClassSchema = new mongoose.Schema({
   class_admitted: {
     type: String,
     required: [true, 'Please a class is required'],
+    unique: true,
   },
   date: {
     type: Date,

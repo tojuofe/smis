@@ -32,6 +32,7 @@ exports.postPayment = async (req, res, next) => {
       description,
       installment,
       Amount,
+      receipt,
       date_paid,
     } = req.body;
 
@@ -42,6 +43,7 @@ exports.postPayment = async (req, res, next) => {
       description,
       installment,
       Amount,
+      receipt,
       date_paid,
     });
 
@@ -84,4 +86,41 @@ exports.postReceipt = async (req, res, next) => {
 
       res.send(Promise.resolve());
     });
+};
+
+// @desc       UPDATE PAYMENT
+// @route      PUT api/payment/:id
+// @access     Private
+exports.updatePayment = async (req, res, next) => {
+  const {
+    depositor_Name,
+    description,
+    installment,
+    Amount,
+    receipt,
+  } = req.body;
+
+  const newExp = {
+    depositor_Name,
+    description,
+    installment,
+    Amount,
+    receipt,
+  };
+
+  try {
+    let payment = await Payment.findByIdAndUpdate(
+      req.params.id,
+      { $set: newExp },
+      { new: true }
+    );
+
+    return res.status(200).json({ success: true, data: payment });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
 };

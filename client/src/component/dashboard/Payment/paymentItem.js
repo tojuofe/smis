@@ -10,6 +10,16 @@ const PaymentItem = ({ payment, getCurrentPayment, downloadReceipt }) => {
     downloadReceipt(payment);
   };
 
+  const modalOpen = () => {
+    const open = document.getElementById('open');
+    const modal = document.getElementById('modal');
+
+    if (open) {
+      modal.classList.add('show-modal');
+    }
+    getCurrentPayment(payment);
+  };
+
   return (
     <Fragment>
       <tr key={payment._id}>
@@ -19,8 +29,12 @@ const PaymentItem = ({ payment, getCurrentPayment, downloadReceipt }) => {
         <td data-label='Description'>{payment.description}</td>
         <td data-label='Installment'>{payment.installment}</td>
         <td data-label='Amount'>NGN {payment.Amount}</td>
+        <td data-label='Receipt'>{payment.receipt}</td>
         <td data-label='Date Paid'>{payment.date_paid}</td>
-        <td data-label='Operation'>
+        <td data-label='Operation' className='operation'>
+          <button type='submit' className='btn' id='open' onClick={modalOpen}>
+            Edit
+          </button>
           <button type='submit' className='btn' onClick={onClick}>
             Download
           </button>

@@ -5,6 +5,7 @@ import {
   getPayment,
   filterPayment,
 } from '../../../action/payment';
+import { getStudents } from '../../../action/student';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import PropTypes from 'prop-types';
 
@@ -15,12 +16,15 @@ import tabControl from '../../js/main';
 import Spinner from '../../layout/Spinner';
 import Alert from '../../layout/Alert';
 import PaymentItem from './paymentItem';
+import PaymentEdit from './paymentEdit';
 
 const Payment = ({
   createPayment,
   getPayment,
   payment: { payments, loading, filtered },
+  student: { students },
   filterPayment,
+  getStudents,
 }) => {
   const text = useRef('');
 
@@ -31,6 +35,7 @@ const Payment = ({
     description: '',
     installment: '',
     Amount: '',
+    receipt: '',
     date_paid: '',
   });
 
@@ -41,13 +46,15 @@ const Payment = ({
     description,
     installment,
     Amount,
+    receipt,
     date_paid,
   } = formData;
 
   useEffect(() => {
     tabControl();
     getPayment();
-  }, [getPayment]);
+    getStudents();
+  }, [getPayment, getStudents]);
 
   const getAllPayment =
     filtered !== null
@@ -75,6 +82,7 @@ const Payment = ({
       description: '',
       installment: '',
       Amount: '',
+      receipt: '',
       date_paid: '',
     });
   };
@@ -104,14 +112,20 @@ const Payment = ({
                       <form onSubmit={onSubmit}>
                         <div className='form-group'>
                           <label htmlFor='nameofstudent'>Name of Student</label>
-                          <input
-                            type='text'
-                            placeholder='Student Name'
+                          <select
                             name='student_Name'
                             value={student_Name}
                             onChange={onChange}
                             required
-                          />
+                          >
+                            <option>Select</option>
+                            {students.map((student) => (
+                              <option
+                                key={student._id}
+                                value={`${student.surName} ${student.lastName}`}
+                              >{`${student.surName} ${student.lastName}`}</option>
+                            ))}
+                          </select>
                         </div>
                         <div className='form-group'>
                           <label htmlFor='nameofdepositor'>
@@ -139,33 +153,60 @@ const Payment = ({
                         </div>
                         <div className='form-group'>
                           <label htmlFor='description'>Description</label>
-                          <input
-                            type='text'
-                            placeholder='Description'
+                          <select
                             name='description'
                             value={description}
                             onChange={onChange}
                             required
-                          />
+                          >
+                            <option>Select</option>
+                            <option value='First Term School Fees'>
+                              First Term School Fees
+                            </option>
+                            <option value='Second Term School Fees'>
+                              Second Term School Fees
+                            </option>
+                            <option value='Third Term School Fees'>
+                              Third Term School Fees
+                            </option>
+                            <option value='Lesson Fees'>Lesson Fees</option>
+                            <option value='Sport Levy'>Sport Levy</option>
+                            <option value='Uniform'>Uniform</option>
+                          </select>
                         </div>
                         <div className='form-group'>
                           <label htmlFor='installment'>Installment</label>
-                          <input
-                            type='text'
-                            placeholder='Installment'
+                          <select
                             name='installment'
                             value={installment}
+                            onChange={onChange}
+                            required
+                          >
+                            <option>Select</option>
+                            <option value='Installment'>Installment</option>
+                            <option value='Complete Payment'>
+                              Complete Payment
+                            </option>
+                          </select>
+                        </div>
+                        <div className='form-group'>
+                          <label htmlFor='Amount'>Amount</label>
+                          <input
+                            type='number'
+                            placeholder='Amount'
+                            name='Amount'
+                            value={Amount}
                             onChange={onChange}
                             required
                           />
                         </div>
                         <div className='form-group'>
-                          <label htmlFor='Amount'>Amount</label>
+                          <label htmlFor='receipt'>Receipt No</label>
                           <input
                             type='text'
-                            placeholder='Amount'
-                            name='Amount'
-                            value={Amount}
+                            placeholder='Receipt No'
+                            name='receipt'
+                            value={receipt}
                             onChange={onChange}
                             required
                           />
@@ -220,6 +261,7 @@ const Payment = ({
                             <th>Description</th>
                             <th>Installment</th>
                             <th>Amount</th>
+                            <th>Receipt</th>
                             <th>Date</th>
                             <th>Operation</th>
                           </tr>
@@ -233,6 +275,7 @@ const Payment = ({
                 </div>
               </div>
             </div>
+            <PaymentEdit />
           </div>
         </div>
       </div>
@@ -242,16 +285,20 @@ const Payment = ({
 
 Payment.propTypes = {
   payment: PropTypes.object.isRequired,
+  student: PropTypes.object.isRequired,
   getPayment: PropTypes.func.isRequired,
   filterPayment: PropTypes.func.isRequired,
+  getStudents: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   payment: state.payment,
+  student: state.student,
 });
 
 export default connect(mapStateToProps, {
   createPayment,
   getPayment,
   filterPayment,
+  getStudents,
 })(Payment);
