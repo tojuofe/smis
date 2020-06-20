@@ -1,0 +1,25 @@
+.popUpLink {
+  color: #0066cc;
+  cursor: pointer;
+}
+
+.popUpResult {
+  display: flex;
+  flex-direction: column;
+  width: 10px;
+  margin-top: 5px;
+}
+
+.result-edit {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.result-form {
+  width: 100%;
+}
+
+.result-border {
+  border-bottom: 1px solid #0066cc;
+}

@@ -1,7 +1,14 @@
-import { CREATE_CLASS, GET_CLASSES, CLASS_ERROR } from '../action/types';
+import {
+  CREATE_CLASS,
+  CREATE_SUBJECT,
+  GET_CLASSES,
+  GET_SUBJECT,
+  CLASS_ERROR,
+} from '../action/types';
 
 const initialState = {
   classes: [],
+  subjects: [],
   loadings: true,
   error: {},
 };
@@ -15,10 +22,22 @@ export default function (state = initialState, action) {
         classes: payload,
         loadings: false,
       };
+    case GET_SUBJECT:
+      return {
+        ...state,
+        subjects: payload,
+        loadings: false,
+      };
     case CREATE_CLASS:
       return {
         ...state,
         classes: [payload, ...state.classes],
+        loadings: false,
+      };
+    case CREATE_SUBJECT:
+      return {
+        ...state,
+        subjects: [payload, ...state.subjects],
         loadings: false,
       };
     case CLASS_ERROR:

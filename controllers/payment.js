@@ -1,6 +1,6 @@
 const Payment = require('../models/payment');
 const pdf = require('html-pdf');
-const pdfTemplate = require('./result');
+const pdfTemplate = require('./receipt');
 
 // @desc        GET ALL PAYMENT
 // @route       GET api/payment
@@ -70,7 +70,7 @@ exports.postPayment = async (req, res, next) => {
 // @route       GET api/payment/receipt
 // @access      Public
 exports.getReceipt = async (req, res, next) => {
-  await res.sendFile(`${__dirname}/result/receipt.pdf`);
+  await res.sendFile(`${__dirname}/receipt/receipt.pdf`);
 };
 
 // @desc        CREATE PAYMENT RECEIPT
@@ -79,7 +79,7 @@ exports.getReceipt = async (req, res, next) => {
 exports.postReceipt = async (req, res, next) => {
   await pdf
     .create(pdfTemplate(req.body), {})
-    .toFile('./controllers/result/receipt.pdf', (err) => {
+    .toFile('./controllers/receipt/receipt.pdf', (err) => {
       if (err) {
         res.send(Promise.reject());
       }

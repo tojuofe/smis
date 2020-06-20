@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
-import { Provider } from 'react-redux';
-import store from './store';
+import { connect } from 'react-redux';
 import setAuthToken from './utils/setAuthToken';
-import { loadUser, loadStaff } from './action/auth';
+import { loadUser } from './action/auth';
 
 // Components
 import Index from './component/';
@@ -11,18 +10,19 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = () => {
+const App = ({ loadUser }) => {
   useEffect(() => {
-    store.dispatch(loadUser());
-    store.dispatch(loadStaff());
+    loadUser();
   });
   return (
-    <Provider store={store}>
-      <Fragment>
-        <Index />
-      </Fragment>
-    </Provider>
+    <Fragment>
+      <Index />
+    </Fragment>
   );
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  loadUser: () => dispatch(loadUser()),
+});
+
+export default connect(null, mapDispatchToProps)(App);

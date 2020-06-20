@@ -42,8 +42,8 @@ const NavLg = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/report' activeClassName='current' exact>
-              <i className='fas fa-users'></i> Report
+            <NavLink to='/result' activeClassName='current' exact>
+              <i className='fas fa-pen-square'></i> &nbsp;Result
             </NavLink>
           </li>
         </ul>

@@ -49,6 +49,42 @@ const StudentSchema = new mongoose.Schema({
   date_of_registration: {
     type: String,
   },
+  exam_type: {
+    type: String,
+    default: 'Exam',
+  },
+  result: {
+    first_term: [
+      {
+        subject: {
+          type: String,
+        },
+        score: {
+          type: String,
+        },
+      },
+    ],
+    second_term: [
+      {
+        subject: {
+          type: String,
+        },
+        score: {
+          type: String,
+        },
+      },
+    ],
+    third_term: [
+      {
+        subject: {
+          type: String,
+        },
+        score: {
+          type: String,
+        },
+      },
+    ],
+  },
   parent_guardian_info: {
     pgi_surName: {
       type: String,

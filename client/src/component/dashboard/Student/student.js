@@ -265,6 +265,7 @@ const Student = ({ classes, createStudent, getClasses }) => {
                           ))}
                         </select>
                       </div>
+
                       <div className='form-group'>
                         <label htmlFor='dateofregistration'>
                           Date of Registration

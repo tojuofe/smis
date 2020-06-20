@@ -10,7 +10,7 @@ import Student from './dashboard/Student/student';
 import Profiles from './dashboard/Profile/profiles';
 import Class from './dashboard/Class/class';
 import Payment from './dashboard/Payment/payment';
-import Report from './dashboard/Report/report';
+import Result from './dashboard/Result/result';
 import NotFound from './dashboard/notfound.js';
 
 // Staff Component
@@ -33,7 +33,7 @@ const Index = () => {
           <PrivateRoute exact path='/profiles' component={Profiles} />
           <PrivateRoute exact path='/class' component={Class} />
           <PrivateRoute exact path='/payment' component={Payment} />
-          <PrivateRoute exact path='/report' component={Report} />
+          <PrivateRoute exact path='/result' component={Result} />
           <Route exact path='/login' component={Login} />
           <PrivateRouteStaff exact path='/profile' component={Profile} />
           <PrivateRouteStaff exact path='/views' component={View} />

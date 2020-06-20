@@ -6,6 +6,12 @@ const ClassSchema = new mongoose.Schema({
     required: [true, 'Please a class is required'],
     unique: true,
   },
+  exam_type: {
+    type: String,
+  },
+  subject: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,
