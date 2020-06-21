@@ -1,16 +1,11 @@
-import React, { Fragment, useEffect } from 'react';
-// import { Redirect } from 'react-router-dom';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loadStaff } from '../../action/auth';
 
 import Navbar from './layout/Navbar';
 import Spinner from '../layout/Spinner';
 
-const Profile = ({ auth: { user, isAuthenticated, loading }, loadStaff }) => {
-  useEffect(() => {
-    loadStaff();
-  }, [loadStaff]);
+const Profile = ({ auth: { user, isAuthenticated, loading } }) => {
   return (
     <Fragment>
       <Navbar />
@@ -74,12 +69,8 @@ Profile.propTypes = {
   auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = ({ auth }) => ({
+  auth,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadStaff: () => dispatch(loadStaff()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps)(Profile);

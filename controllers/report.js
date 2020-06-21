@@ -9,7 +9,7 @@ exports.getReport = async (req, res, next) => {
   try {
     const report = await Student.find(
       {},
-      'img surName middleName lastName class_admitted term exam_type result'
+      'img surName middleName lastName gender date_of_birth class_admitted term exam_type result'
     );
 
     res.status(200).json({ success: true, count: report.length, data: report });

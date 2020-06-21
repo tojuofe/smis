@@ -1,36 +1,42 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getStudents } from '../../action/student';
+import { getSubject } from '../../action/class';
+import { getReport } from '../../action/report';
 
 import Navbar from './layout/Navbar';
 import ViewItem from './ViewItem';
 import Spinner from '../layout/Spinner';
+import ReportForm from './ReportForm';
+import Alert from '../layout/Alert';
 
 const View = ({
   auth: { user },
-  student: { students, loading },
-  getStudents,
+  report: { reports, loading },
+  getReport,
+  getSubject,
 }) => {
-  const getAllStudents = students.map((student) => (
-    <ViewItem key={student._id} student={student} user={user} />
+  const getAllStudents = reports.map((report) => (
+    <ViewItem key={report._id} report={report} user={user} />
   ));
 
   useEffect(() => {
-    getStudents();
-  }, [getStudents]);
+    getReport();
+    getSubject();
+  }, [getReport, getSubject]);
 
   return (
     <Fragment>
       <Navbar />
       <div className='profile'>
+        <Alert />
         <div className='staff-details py-1'>
           <label htmlFor=''>Teacher's Name: </label>
           <p>{`${user && user.surName} ${user && user.middleName} ${
             user && user.lastName
           }`}</p>
         </div>
-        {students !== null && !loading ? (
+        {reports !== null && !loading ? (
           <table className='table'>
             <thead>
               <tr>
@@ -48,6 +54,7 @@ const View = ({
           <Spinner />
         )}
       </div>
+      <ReportForm />
     </Fragment>
   );
 };
@@ -55,12 +62,13 @@ const View = ({
 View.propTypes = {
   auth: PropTypes.object.isRequired,
   student: PropTypes.object.isRequired,
-  getStudents: PropTypes.func.isRequired,
+  getReport: PropTypes.func.isRequired,
+  getSubject: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  student: state.student,
+  report: state.report,
 });
 
-export default connect(mapStateToProps, { getStudents })(View);
+export default connect(mapStateToProps, { getReport, getSubject })(View);

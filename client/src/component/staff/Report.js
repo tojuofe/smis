@@ -2,24 +2,25 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getStudents } from '../../action/student';
-import { getClasses } from '../../action/class';
+import { getClasses, getSubject } from '../../action/class';
 import { createReport } from '../../action/report';
 
 import Navbar from './layout/Navbar';
 import Alert from '../layout/Alert';
 
 const Report = ({
-  class_: { classes },
+  class_: { classes, subjects },
   student: { students },
+  user,
   getStudents,
   getClasses,
+  getSubject,
   createReport,
 }) => {
   const [formData, setFormData] = useState({
     term: '',
     total: '',
-    name: '',
-    position_or_grade: '',
+    subject: '',
     gender: '',
     teacher_remark: '',
     class_admitted: '',
@@ -28,9 +29,8 @@ const Report = ({
 
   const {
     term,
-    total,
     name,
-    position_or_grade,
+    subject,
     gender,
     teacher_remark,
     class_admitted,
@@ -47,7 +47,7 @@ const Report = ({
       term: '',
       total: '',
       name: '',
-      position_or_grade: '',
+      subject: '',
       gender: '',
       teacher_remark: '',
       class_admitted: '',
@@ -58,7 +58,8 @@ const Report = ({
   useEffect(() => {
     getClasses();
     getStudents();
-  }, [getClasses, getStudents]);
+    getSubject();
+  }, [getClasses, getStudents, getSubject]);
 
   return (
     <Fragment>
@@ -71,49 +72,55 @@ const Report = ({
             <div className='form-card'>
               <div className='form-group'>
                 <label htmlFor='term'>Term</label>
-                <input
-                  type='text'
-                  placeholder='Term'
-                  name='term'
-                  value={term}
-                  onChange={onChange}
-                  required
-                />
+                <select name='term' value={term} onChange={onChange}>
+                  <option>-- Select --</option>
+                  <option value='1st'>1st</option>
+                  <option value='2nd'>2nd</option>
+                  <option value='3rd'>3rd</option>
+                </select>
               </div>
               <div className='form-group'>
-                <label htmlFor='total'>Total</label>
-                <input
-                  type='text'
-                  placeholder='Total'
-                  name='total'
-                  value={total}
+                <label htmlFor='total'>Subject</label>
+                <select
+                  name='subject'
+                  value={subject}
+                  className='form-input'
                   onChange={onChange}
-                  required
-                />
+                >
+                  <option>-- Select --</option>
+                  {subjects.map((s) => (
+                    <option key={s._id} value={s.subject}>
+                      {s.subject}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <select name='name' value={name} onChange={onChange} required>
                   <option value=''>Select</option>
-                  {students.map((student) => (
-                    <option
-                      key={student._id}
-                      value={`${student.surName} ${student.lastName}`}
-                    >{`${student.surName} ${student.lastName}`}</option>
-                  ))}
+                  {students
+                    .filter(
+                      (student) =>
+                        user && user.class_assigned === student.class_admitted
+                    )
+                    .map((student) => (
+                      <option
+                        key={student._id}
+                        value={
+                          user &&
+                          user.class_assigned === student.class_admitted &&
+                          `${student.surName} ${student.lastName}`
+                        }
+                      >
+                        {user &&
+                          user.class_assigned === student.class_admitted &&
+                          `${student.surName} ${student.lastName}`}
+                      </option>
+                    ))}
                 </select>
               </div>
-              <div className='form-group'>
-                <label htmlFor='positionorgrade'>Position or Grade</label>
-                <input
-                  type='text'
-                  placeholder='Total'
-                  name='position_or_grade'
-                  value={position_or_grade}
-                  onChange={onChange}
-                  required
-                />
-              </div>
+              <div className='form-group'></div>
               <div className='form-group'>
                 <label htmlFor='middlename'>Gender</label>
                 <select
@@ -180,15 +187,18 @@ Report.propTypes = {
   getStudents: PropTypes.func,
   getClasses: PropTypes.func,
   createReport: PropTypes.func,
+  getSubject: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  class_: state.class_,
-  student: state.student,
+const mapStateToProps = ({ class_, student, auth: { user } }) => ({
+  class_,
+  student,
+  user,
 });
 
 export default connect(mapStateToProps, {
   getClasses,
   getStudents,
   createReport,
+  getSubject,
 })(Report);

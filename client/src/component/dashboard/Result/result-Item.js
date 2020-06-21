@@ -4,22 +4,22 @@ import PropTypes from 'prop-types';
 import { getCurrentResult } from '../../../action/report';
 
 const ResultItem = ({ report, getCurrentResult }) => {
-  const lgModalOpen = () => {
-    const open = document.getElementById('open');
-    const lgmodal = document.getElementById('modal-lg');
-
-    if (open) {
-      lgmodal.classList.add('show-modal');
-    }
-    getCurrentResult(report);
-  };
-
   const subjectModalOpen = () => {
     const open = document.getElementById('open');
     const modal = document.getElementById('editModal');
 
     if (open) {
       modal.classList.add('show-modal');
+    }
+    getCurrentResult(report);
+  };
+
+  const lgModalOpen = () => {
+    const open = document.getElementById('open');
+    const lgmodal = document.getElementById('modal-lg');
+
+    if (open) {
+      lgmodal.classList.add('show-modal');
     }
     getCurrentResult(report);
   };
@@ -47,7 +47,12 @@ const ResultItem = ({ report, getCurrentResult }) => {
           <button type='submit' className='btn' id='open' onClick={lgModalOpen}>
             View
           </button>
-          <button type='submit' className='btn' onClick={deleteModalOpen}>
+          <button
+            type='submit'
+            className='btn'
+            id='open'
+            onClick={deleteModalOpen}
+          >
             Delete / Download
           </button>
         </td>

@@ -48,10 +48,7 @@ const ResultView = ({
                   <tr>
                     <th>Names</th>
                     <th>Class Admitted</th>
-                    <th>Term</th>
                     <th>Exam Type</th>
-                    <th>Subject</th>
-                    <th>Score</th>
                     <th>Operation</th>
                   </tr>
                 </thead>

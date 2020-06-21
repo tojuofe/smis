@@ -6,34 +6,34 @@ import PropTypes from 'prop-types';
 
 import img from '../../dashboard/img/IMG.png';
 
-const Navbar = ({ logout }) => {
+const Navbar = ({ logout, user, isAuthenticated }) => {
   return (
     <Fragment>
-      <div id='navbar'>
-        <img src={img} alt='img' className='logo' />
-        <ul>
-          <li>
-            <NavLink to='/profile' activeclassname='active'>
-              Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/views' activeclassname='active'>
-              Views
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/reports' activeclassname='active'>
-              Report
-            </NavLink>
-          </li>
-          <li>
-            <Link to='#!' onClick={logout}>
-              LOGOUT
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {isAuthenticated && user && (
+        <div id='navbar'>
+          <img src={img} alt='img' className='logo' />
+          <ul>
+            <li>
+              <NavLink
+                to={`/staff/profile/${user._id}`}
+                activeclassname='active'
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/views' activeclassname='active'>
+                Views
+              </NavLink>
+            </li>
+            <li>
+              <Link to='#!' onClick={logout}>
+                LOGOUT
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </Fragment>
   );
 };
@@ -42,4 +42,9 @@ Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
 };
 
-export default connect(null, { logout })(Navbar);
+const mapStateToProps = ({ auth: { user, isAuthenticated } }) => ({
+  user,
+  isAuthenticated,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);

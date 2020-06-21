@@ -1,5 +1,4 @@
 const Class = require('../models/class');
-const ExamType = require('../models/examType');
 const Subject = require('../models/subject');
 
 // @desc       GET CLASS

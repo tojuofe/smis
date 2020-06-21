@@ -1,17 +1,30 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const ViewItem = ({ student, user }) => {
+import { getCurrentResult } from '../../action/report';
+
+const ViewItem = ({ user, report, getCurrentResult }) => {
+  const modalOpen = () => {
+    const open = document.getElementById('open');
+    const modal = document.getElementById('editModal');
+
+    if (open) {
+      modal.classList.add('show-modal');
+    }
+    getCurrentResult(report);
+  };
+
   return (
     <Fragment>
-      {user && user.class_assigned === student.class_admitted && (
-        <tr>
-          <td data-label='Firstname'>{student.surName}</td>
-          <td data-label='Middlename'>{student.middleName}</td>
-          <td data-label='Lastname'>{student.lastName}</td>
-          <td data-label='Gender'>{student.gender}</td>
-          <td data-label='Date of Birth'>{student.date_of_birth}</td>
-          <td data-label='Class'>{student.class_admitted}</td>
+      {user && user.class_assigned === report.class_admitted && (
+        <tr id='open' onClick={modalOpen}>
+          <td data-label='Firstname'>{report.surName}</td>
+          <td data-label='Middlename'>{report.middleName}</td>
+          <td data-label='Lastname'>{report.lastName}</td>
+          <td data-label='Gender'>{report.gender}</td>
+          <td data-label='Date of Birth'>{report.date_of_birth}</td>
+          <td data-label='Class'>{report.class_admitted}</td>
         </tr>
       )}
     </Fragment>
@@ -19,8 +32,13 @@ const ViewItem = ({ student, user }) => {
 };
 
 ViewItem.protoTypes = {
-  student: PropTypes.array,
+  report: PropTypes.array,
   user: PropTypes.object,
+  getCurrentResult: PropTypes.func,
 };
 
-export default ViewItem;
+const mapDispatchToProps = (dispatch) => ({
+  getCurrentResult: (result) => dispatch(getCurrentResult(result)),
+});
+
+export default connect(null, mapDispatchToProps)(ViewItem);

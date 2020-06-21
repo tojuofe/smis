@@ -1,4 +1,5 @@
 const Payment = require('../models/payment');
+const Description = require('../models/Description');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./receipt');
 
@@ -50,6 +51,56 @@ exports.postPayment = async (req, res, next) => {
     payment = await Payment.create(payment);
 
     return res.status(200).json({ success: true, data: payment });
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      const msgs = Object.values(err.errors).map((val) => val.message);
+      return res.status(400).json({
+        success: false,
+        error: msgs,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error',
+      });
+    }
+  }
+};
+
+// @desc        GET ALL PAYMENT DESCRIPTION
+// @route       GET api/payment/description
+// @access      Public
+exports.getDescription = async (req, res, next) => {
+  try {
+    const describePayment = await Description.find();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        count: describePayment.length,
+        data: describePayment,
+      });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
+};
+
+// @desc        CREATE DESCRIPTION
+// @route       POST api/paymemt/description
+// @access      Private
+exports.postDescription = async (req, res, next) => {
+  try {
+    const { description } = req.body;
+
+    let describePayment = new Description({ description });
+
+    describePayment = await Description.create(describePayment);
+
+    return res.status(200).json({ success: true, data: describePayment });
   } catch (err) {
     if (err.name === 'ValidationError') {
       const msgs = Object.values(err.errors).map((val) => val.message);

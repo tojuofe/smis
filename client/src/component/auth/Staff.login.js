@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginStaff } from '../../action/auth';
 import Alert from '../layout/Alert';
 
-const StaffLogin = ({ loginStaff, isAuthenticated }) => {
+const StaffLogin = ({ loginStaff }) => {
   const [formData, setFormData] = useState({
     email: '',
     phoneNumber1: '',
@@ -19,10 +18,6 @@ const StaffLogin = ({ loginStaff, isAuthenticated }) => {
     e.preventDefault();
     loginStaff({ email, phoneNumber1 });
   };
-
-  if (isAuthenticated) {
-    return <Redirect to='/profile' />;
-  }
 
   return (
     <Fragment>
@@ -64,11 +59,6 @@ const StaffLogin = ({ loginStaff, isAuthenticated }) => {
 
 StaffLogin.propTypes = {
   loginStaff: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { loginStaff })(StaffLogin);
+export default connect(null, { loginStaff })(StaffLogin);

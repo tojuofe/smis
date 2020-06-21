@@ -5,6 +5,8 @@ import {
   FILTER_PAYMENT,
   UPDATE_PAYMENT,
   PAYMENT_ERROR,
+  CREATE_DESCRIPTION,
+  GET_DESCRIPTION,
 } from './types';
 import axios from 'axios';
 import { setAlert } from './alert';
@@ -41,6 +43,54 @@ export const createPayment = (formData) => async (dispatch) => {
     });
 
     dispatch(setAlert('Payment Created Successfully', 'success'));
+  } catch (err) {
+    const errors = err.response.data.error;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PAYMENT_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const getDescription = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/payment/description');
+
+    dispatch({
+      type: GET_DESCRIPTION,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PAYMENT_ERROR,
+    });
+  }
+};
+
+export const createDescription = (description) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.post(
+      '/api/payment/description',
+      description,
+      config
+    );
+
+    dispatch({
+      type: CREATE_DESCRIPTION,
+      payload: res.data.data,
+    });
+
+    dispatch(setAlert('Description Created', 'success'));
   } catch (err) {
     const errors = err.response.data.error;
 

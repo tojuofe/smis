@@ -13,8 +13,8 @@ import tabControl from '../../js/main';
 import { toggleNav } from '../../js/main';
 import ResultSubject from './result-subject';
 import ResultView from './result-View';
-import ResultDelete from './result-delete';
 import ResultForm from './result-form';
+import ResultDelete from './result-delete';
 import View from './view';
 
 import './result.style.css';
@@ -50,9 +50,9 @@ const Report = ({ getClasses, getStudents, getSubject }) => {
               </div>
               <ResultView />
               <ResultForm />
+              <ResultDelete />
             </div>
             <ResultSubject />
-            <ResultDelete />
             <View />
           </div>
         </div>

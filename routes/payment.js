@@ -6,10 +6,13 @@ const {
   postReceipt,
   getReceipt,
   updatePayment,
+  postDescription,
+  getDescription,
 } = require('../controllers/payment');
 const auth = require('../middleware/auth');
 
 router.route('/').post(auth, postPayment).get(getPayment);
+router.route('/description').post(auth, postDescription).get(getDescription);
 
 router.route('/receipt').post(auth, postReceipt).get(getReceipt);
 

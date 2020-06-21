@@ -5,10 +5,13 @@ import {
   FILTER_PAYMENT,
   UPDATE_PAYMENT,
   PAYMENT_ERROR,
+  CREATE_DESCRIPTION,
+  GET_DESCRIPTION,
 } from '../action/types';
 
 const initialState = {
   payments: [],
+  descriptions: [],
   current: null,
   filtered: null,
   loading: true,
@@ -24,10 +27,22 @@ export default function (state = initialState, action) {
         payments: payload,
         loading: false,
       };
+    case GET_DESCRIPTION:
+      return {
+        ...state,
+        descriptions: payload,
+        loading: false,
+      };
     case CREATE_PAYMENT:
       return {
         ...state,
         payments: [...state.payments, payload],
+        loading: false,
+      };
+    case CREATE_DESCRIPTION:
+      return {
+        ...state,
+        descriptions: [...state.descriptions, payload],
         loading: false,
       };
     case UPDATE_PAYMENT:
