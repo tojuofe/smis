@@ -8,12 +8,12 @@ const {
   post_rStudent,
   promoteStudent,
   editStudent,
-  getStud,
+  postStudResult,
 } = require('../controllers/student');
 
 router.route('/').get(getAllStudent).post(auth, postStudent);
 
-router.route('/studentDetails').get(getStud);
+router.route('/result').post(auth, postStudResult);
 
 router.route('/rStudent').post(auth, post_rStudent);
 

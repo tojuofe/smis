@@ -80,14 +80,28 @@ const PaymentForm = ({ createPayment, students, descriptions }) => {
                 </div>
                 <div className='form-group'>
                   <label htmlFor='nameofdepositor'>Name of Depositor</label>
-                  <input
+                  <select
+                    name='depositor_Name'
+                    value={depositor_Name}
+                    onChange={onChange}
+                    required
+                  >
+                    <option>Select</option>
+                    {students.map((student) => (
+                      <option
+                        key={student._id}
+                        value={`${student.parent_guardian_info.pgi_surName} ${student.parent_guardian_info.pgi_lastName}`}
+                      >{`${student.parent_guardian_info.pgi_surName} ${student.parent_guardian_info.pgi_lastName}`}</option>
+                    ))}
+                  </select>
+                  {/* <input
                     type='text'
                     placeholder='Depositor Name'
                     name='depositor_Name'
                     value={depositor_Name}
                     onChange={onChange}
                     required
-                  />
+                  /> */}
                 </div>
                 <div className='form-group'>
                   <label htmlFor='phonenumber'>Phone Number</label>

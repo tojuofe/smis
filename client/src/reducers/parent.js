@@ -1,7 +1,13 @@
-import { GET_PARENT, FILTER_PARENT, PARENT_ERROR } from '../action/types';
+import {
+  GET_PARENT,
+  FILTER_PARENT,
+  PARENT_ERROR,
+  GET_STUDENT_RESULT,
+} from '../action/types';
 
 const initialState = {
   parents: [],
+  results: [],
   filtered: null,
   loading: true,
   error: {},
@@ -14,6 +20,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         parents: payload,
+        loading: false,
+      };
+    case GET_STUDENT_RESULT:
+      return {
+        ...state,
+        results: payload,
         loading: false,
       };
     case FILTER_PARENT:

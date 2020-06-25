@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { loadUser } from '../../action/auth';
 
 import Login from '../auth/login';
 import Dashboard from '../dashboard/dashboard';
@@ -14,10 +13,7 @@ import Result from '../dashboard/Result/result';
 
 import PrivateRoute from '../routing/PrivateRoute';
 
-const Routes = ({ loadUser }) => {
-  useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+const Routes = () => {
   return (
     <Fragment>
       <Switch>
@@ -34,8 +30,4 @@ const Routes = ({ loadUser }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  loadUser: () => dispatch(loadUser()),
-});
-
-export default connect(null, mapDispatchToProps)(Routes);
+export default connect()(Routes);

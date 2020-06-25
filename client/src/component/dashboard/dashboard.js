@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../../action/auth';
+import { logout, loadUser } from '../../action/auth';
 import { getClasses } from '../../action/class';
 import { getStudents } from '../../action/student';
 import { getStaff } from '../../action/staff';
@@ -21,6 +21,7 @@ const Dashboard = ({
   student: { students },
   staff: { staffs },
   payment: { payments },
+  loadUser,
   getClasses,
   getStudents,
   getStaff,
@@ -29,12 +30,13 @@ const Dashboard = ({
   logout,
 }) => {
   useEffect(() => {
+    loadUser();
     getClasses();
     getStudents();
     getStaff();
     getPayment();
     getParent();
-  }, [getClasses, getStudents, getStaff, getPayment, getParent]);
+  }, [loadUser, getClasses, getStudents, getStaff, getPayment, getParent]);
 
   const classNum = classes.map(($class) => (
     <Fragment key={$class._id}>{$class}</Fragment>
@@ -236,4 +238,5 @@ export default connect(mapStateToProps, {
   getStaff,
   getPayment,
   getParent,
+  loadUser,
 })(Dashboard);

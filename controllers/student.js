@@ -22,20 +22,28 @@ exports.getAllStudent = async (req, res, next) => {
   }
 };
 
-// @desc       GET All STUDENT SPECIFIC DETAILS
-// @route      GET api/student/studentDetails
-// @access     Public
-exports.getStud = async (req, res, next) => {
+// @desc       GET STUDENT RESULT
+// @route      POST api/student/result
+// @access     Private
+exports.postStudResult = async (req, res, next) => {
+  const { surName, lastName } = req.body;
+
   try {
-    const student = await Student.find(
-      {},
-      'surName middleName lastName gender date_of_birth class_admitted'
-    );
+    const student = await Student.find({ surName, lastName });
+
+    if (student.length === 0) {
+      return res.status(400).json({
+        errors: [
+          { msg: `No Record Found With ${surName} ${lastName}, Try Again` },
+        ],
+      });
+    }
 
     res
       .status(200)
       .json({ success: true, count: student.length, data: student });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       success: false,
       error: 'Server Error',

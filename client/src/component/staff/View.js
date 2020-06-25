@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getSubject } from '../../action/class';
 import { getReport } from '../../action/report';
+import { loadStaff } from '../../action/auth';
 
 import Navbar from './layout/Navbar';
 import ViewItem from './ViewItem';
@@ -15,6 +16,7 @@ const View = ({
   report: { reports, loading },
   getReport,
   getSubject,
+  loadStaff,
 }) => {
   const getAllStudents = reports.map((report) => (
     <ViewItem key={report._id} report={report} user={user} />
@@ -23,7 +25,8 @@ const View = ({
   useEffect(() => {
     getReport();
     getSubject();
-  }, [getReport, getSubject]);
+    loadStaff();
+  }, [getReport, getSubject, loadStaff]);
 
   return (
     <Fragment>
@@ -64,6 +67,7 @@ View.propTypes = {
   student: PropTypes.object.isRequired,
   getReport: PropTypes.func.isRequired,
   getSubject: PropTypes.func.isRequired,
+  loadStaff: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -71,4 +75,6 @@ const mapStateToProps = (state) => ({
   report: state.report,
 });
 
-export default connect(mapStateToProps, { getReport, getSubject })(View);
+export default connect(mapStateToProps, { getReport, getSubject, loadStaff })(
+  View
+);

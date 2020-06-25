@@ -55,7 +55,7 @@ const ProfileParent = ({
             <td data-label='Phone Number1'>
               {p.parent_guardian_info.pgi_phoneNumber1}
             </td>
-            <td data-label='Phonoe Number2'>
+            <td data-label='Phone Number2'>
               {p.parent_guardian_info.pgi_phoneNumber2}
             </td>
             <td data-label='House Address'>

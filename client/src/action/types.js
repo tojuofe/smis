@@ -48,3 +48,8 @@ export const LOGOUT = 'LOGOUT';
 // STAFF
 export const STAFF_LOADED = 'STAFF_LOADED';
 export const STAFF_SUCCESS = 'STAFF_SUCCESS';
+
+// PARENT
+export const PARENT_LOADED = 'PARENT_LOADED';
+export const PARENT_SUCCESS = 'PARENT_SUCCESS';
+export const GET_STUDENT_RESULT = 'GET_STUDENT_RESULT';

@@ -72,7 +72,6 @@ export const deleteResult = (term) => async (dispatch) => {
     });
     dispatch(setAlert('Result Deleted', 'success'));
   } catch (err) {
-    console.log(err);
     dispatch({
       type: REPORT_ERROR,
     });

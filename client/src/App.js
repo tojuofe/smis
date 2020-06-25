@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import setAuthToken from './utils/setAuthToken';
 
 // Components
@@ -8,12 +8,6 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = () => {
-  return (
-    <Fragment>
-      <Index />
-    </Fragment>
-  );
-};
+const App = () => <Index />;
 
 export default App;
